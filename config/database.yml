@@ -1,0 +1,11 @@
+default: &default
+  adapter: sqlite3
+  timeout: 5000
+
+development: 
+  <<: *default  
+  database: db/project-dev.db
+
+production:
+  <<: *default
+  database: db/project-prod.sqlite3
