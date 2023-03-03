@@ -10,10 +10,13 @@ class UserController < AppController
 
 
    #@method: create a new user
-   post '/auth/register' do
+   post '/auth/signup' do
     begin
-      x = User.create(@user)
-      json_response(code: 201, data: x)
+      user = User.create(@user)
+      unless user.save
+        puts " errors: #{user.errors.full_messages}"
+      end
+      json_response(code: 201, data: user)
     rescue => e
       error_response(422, e)
     end
@@ -40,11 +43,13 @@ class UserController < AppController
 
   # @helper: parse user JSON data
   def user_data
-    JSON.parse(request.body.read)
-  end
-
-  
-
+    json_data = JSON.parse(request.body.read)
+    puts "JSON data received: #{json_data}"
+    json_data
+    rescue JSON::ParserError => e
+     puts "Failed to parse JSON data: #{e}"
+      nil
+   end
 
 
 end

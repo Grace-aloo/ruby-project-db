@@ -1,4 +1,4 @@
 class ProjectSkill < ActiveRecord::Base
-    belongs_to :project
-    belongs_to :skill
+    # belongs_to :project
+    # belongs_to :skill
 end

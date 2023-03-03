@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base 
     has_many :projects
     has_many :skills
-    has_many :project_skills, through: :projects, source: :skills
+    # has_many :project_skills, through: :projects, source: :skills
 
     include BCrypt
     

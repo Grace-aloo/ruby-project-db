@@ -12,13 +12,11 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_03_02_195614) do
   create_table "project_skills", force: :cascade do |t|
-    t.integer "project_id", null: false
-    t.integer "skill_id", null: false
     t.integer "level"
+    t.integer "skill_id"
+    t.integer "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_project_skills_on_project_id"
-    t.index ["skill_id"], name: "index_project_skills_on_skill_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -36,10 +34,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_195614) do
     t.string "name", limit: 10, null: false
     t.string "tools"
     t.integer "user_id"
-    t.integer "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name", "user_id", "project_id"], name: "index_skills_on_name_and_user_id_and_project_id", unique: true
+    t.index ["name", "user_id"], name: "index_skills_on_name_and_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,13 +44,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_195614) do
     t.string "lastname", null: false
     t.string "email", null: false
     t.string "password_hash", null: false
-    t.string "user_name"
+    t.string "username"
     t.string "job"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "uk_email", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "project_skills", "projects"
-  add_foreign_key "project_skills", "skills"
 end
