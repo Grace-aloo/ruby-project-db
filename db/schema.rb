@@ -28,15 +28,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_195614) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "skills", force: :cascade do |t|
-    t.string "name", limit: 10, null: false
+    t.string "name", limit: 10
     t.string "tools"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name", "user_id"], name: "index_skills_on_name_and_user_id", unique: true
+    t.index ["user_id"], name: "index_skills_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -51,4 +53,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_195614) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "projects", "users"
+  add_foreign_key "skills", "users"
 end

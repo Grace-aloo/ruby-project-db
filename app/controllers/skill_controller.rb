@@ -3,7 +3,7 @@ class SkillController < AppController
      # @method: Add a new Project to the DB
      post '/skill/create' do
         begin
-            skill = Skill.create( self.data(create = true) )
+            skill = Skill.create( self.data(create: true) )
             json_response(code: 201, data: skill)
         rescue => e
             json_response(code: 422, data: { error: e.message })
@@ -46,7 +46,7 @@ class SkillController < AppController
     end
 
     # @helper: format body data
-    def data(create = false)
+    def data(create: false)
         payload = JSON.parse(request.body.read)
         puts "the payload is : #{payload}"
         payload
