@@ -16,6 +16,13 @@ class ProjectController < AppController
         json_response(data: projects)
     end
 
+    #get user specific projects
+    get '/projects/:user_id' do
+        user_id = params[:user_id]
+        projects = Project.where(user_id: user_id)
+        json_response(data: projects)
+    end
+
      # @method: Update existing Project according to :id
     put '/projects/update/:id' do
         begin
