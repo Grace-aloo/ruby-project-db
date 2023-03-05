@@ -26,7 +26,7 @@ class SkillController < AppController
         json_response(data: skills)
     end  
 
-    # @method: Display projects user specific skills
+    # @method: Display user specific skills
     get '/skills/:user_id' do
         user_id = params[:user_id]
         skills = Skill.where(user_id: user_id)
