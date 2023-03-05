@@ -6,7 +6,7 @@ class CreateProjects < ActiveRecord::Migration[7.0]
       t.string :description 
       t.string :site_link 
       t.string :git_link
-      t.references :user, foreign_key: true
+      t.references :user, null: false, foreign_key: true
       # t.integer :user_id 
       t.timestamps
     end

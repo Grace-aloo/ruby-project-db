@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_195614) do
     t.string "description"
     t.string "site_link"
     t.string "git_link"
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_projects_on_user_id"
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_195614) do
   create_table "skills", force: :cascade do |t|
     t.string "name", limit: 10
     t.string "tools"
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name", "user_id"], name: "index_skills_on_name_and_user_id", unique: true

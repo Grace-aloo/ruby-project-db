@@ -21,6 +21,25 @@ class UserController < AppController
       error_response(422, e)
     end
    end
+
+     # Define a route for retrieving a user by ID
+  get '/user/:id' do
+    begin
+  # Retrieve the user from your database or data source
+  user = User.find(params[:id])
+  # If the user is found, return their details as JSON
+  if user
+    json_response( code:200, data:
+    { id: user.id, name: user.name, email: user.email })
+  else
+    # If the user is not found, return a 404 error
+    json_response(code: 404, data:
+    { message: "User with ID #{params[:id]} not found" })
+  end
+rescue => e
+  error_response(422,e)
+  end 
+end
      
     #@method: log in user using email and password
   post '/auth/login' do

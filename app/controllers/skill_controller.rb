@@ -9,11 +9,26 @@ class SkillController < AppController
             json_response(code: 422, data: { error: e.message })
         end
     end
-   
+    get '/users/:user_id/skills' do
+        user_id = params[:user_id]
+        if user_id.nil?
+          status 400
+          json_response(error: 'User ID parameter is missing')
+        else
+          user = User.find(user_id)
+          skills = user.skills
+          json_response(data: skills)
+        end
+    end  
+    get '/skills'  do
+        skills=Skill.all
+        json_response(data: skills)
+    end  
 
     # @method: Display all projects
-    get '/skills' do
-         skills = Skill.all
+    get '/skills/:user_id' do
+        user_id = params[:user_id]
+        skills = Skill.where(user_id: user_id)
         json_response(data: skills)
     end
 
