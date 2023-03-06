@@ -63,10 +63,10 @@ end
   # @helper: parse user JSON data
   def user_data
     json_data = JSON.parse(request.body.read)
-    puts "JSON data received: #{json_data}"
+    # puts "JSON data received: #{json_data}"
     json_data
     rescue JSON::ParserError => e
-     puts "Failed to parse JSON data: #{e}"
+    #  puts "Failed to parse JSON data: #{e}"
       nil
    end
 

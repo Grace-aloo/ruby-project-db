@@ -68,10 +68,10 @@ class SkillController < AppController
     # @helper: format body data
     def data(create: false)
         payload = JSON.parse(request.body.read)
-        puts "the payload is : #{payload}"
+        # puts "the payload is : #{payload}"
         payload
         rescue JSON::ParserError => e 
-            puts "Failed to parse JSON data: #{e}"
+            # puts "Failed to parse JSON data: #{e}"
             nil
     end
 end
