@@ -26,6 +26,10 @@ class SkillController < AppController
         json_response(data: skills)
     end  
 
+    get '/hello' do 
+        "hi guys"
+    end
+
     # @method: Display user specific skills
     get '/skills/:user_id' do
         user_id = params[:user_id]
