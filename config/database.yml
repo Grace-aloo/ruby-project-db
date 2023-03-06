@@ -4,7 +4,7 @@ default: &default
 
 development: 
   <<: *default  
-  database: db/project-dev.db
+  database: db/project-dev.sqlite3
 
 production:
   <<: *default
