@@ -1,7 +1,7 @@
 # PORTFOLIO DATABASE 
 ## Description
 This project is meant to act as the back-end for this [portfolio app](https://portfolio2-psi-peach.vercel.app/)
-Here is a link to the front-end repository [FRONT-END](https://github.com/Grace-aloo/Portfolio)
+Here is a link to the front-end repository [FRONT-END](https://github.com/Grace-aloo/Portforlio)
 
 The database hase 3 main classes: Skill,User,Project. The User class has a one to many relationship with both the Skill class and the Project class.
 
