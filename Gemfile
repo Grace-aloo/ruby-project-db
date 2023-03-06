@@ -1,6 +1,8 @@
 
 source "https://rubygems.org/"
 
+#ruby "2.7.4"
+
 #ruby File.read('.ruby-version').strip
 
 gem 'sinatra', '~> 3.0', '>= 3.0.5'
