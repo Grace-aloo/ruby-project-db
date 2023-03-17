@@ -1,3 +1,5 @@
+require 'net/http'
+
 class AppController < Sinatra::Base
     configure do
         enable :cross_origin
@@ -38,6 +40,18 @@ class AppController < Sinatra::Base
     not_found do
         not_found_response
     end
+
+    #to keep the server alive
+    def keep_alive
+        uri = URI('https://grace-portfolio-app.onrender.com')
+        Net::HTTP.get(uri)
+      end
+      
+      scheduler = Rufus::Scheduler.new
+      
+      scheduler.every '5m' do
+        keep_alive
+      end
 
     
 end 
