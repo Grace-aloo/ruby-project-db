@@ -43,6 +43,7 @@ class AppController < Sinatra::Base
 
     #to keep the server alive
     def keep_alive
+      puts "keep_alive called at #{Time.now}"
         uri = URI('https://grace-portfolio-app.onrender.com')
         Net::HTTP.get(uri)
       end
@@ -52,6 +53,9 @@ class AppController < Sinatra::Base
       scheduler.every '5m' do
         keep_alive
       end
+
+      scheduler.join
+
 
     
 end 
