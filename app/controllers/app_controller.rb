@@ -4,6 +4,7 @@ require 'rufus-scheduler'
 class AppController < Sinatra::Base
     configure do
         enable :cross_origin
+        enable :sessions
     end
 
     before do
