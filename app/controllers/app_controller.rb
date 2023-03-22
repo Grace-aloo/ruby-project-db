@@ -44,7 +44,7 @@ class AppController < Sinatra::Base
 
     #to keep the server alive
       
-      scheduler = Rufus::Scheduler.start_new
+      scheduler = Rufus::Scheduler.new
       
       scheduler.every '5m' do
         puts "keep_alive called at #{Time.now}"
