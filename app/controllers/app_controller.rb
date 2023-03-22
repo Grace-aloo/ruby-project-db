@@ -1,4 +1,5 @@
 require 'net/http'
+require 'rufus-scheduler'
 
 class AppController < Sinatra::Base
     configure do
@@ -42,19 +43,14 @@ class AppController < Sinatra::Base
     end
 
     #to keep the server alive
-    def keep_alive
-      puts "keep_alive called at #{Time.now}"
+      
+      scheduler = Rufus::Scheduler.start_new
+      
+      scheduler.every '5m' do
+        puts "keep_alive called at #{Time.now}"
         uri = URI('https://grace-portfolio-app.onrender.com')
         Net::HTTP.get(uri)
       end
-      
-      scheduler = Rufus::Scheduler.new
-      
-      scheduler.every '5m' do
-        keep_alive
-      end
-
-      scheduler.join
 
 
     
