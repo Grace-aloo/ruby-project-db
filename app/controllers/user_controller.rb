@@ -44,7 +44,7 @@ class UserController < AppController
   else
     # If the user is not found, return a 404 error
     json_response(code: 404, data:
-    { message: "User with ID #{params[:id]} not found" })
+    { error: "User with ID #{params[:id]} not found" })
   end
 rescue => e
   error_response(422,e)
@@ -64,7 +64,7 @@ end
           token:token
         })
       else
-        json_response(code: 422, data: { message: "Your email/password combination is not correct" })
+        json_response(code: 422, data: { error: "Your email/password combination is not correct" })
       end
     rescue => e
       error_response(422, e)

@@ -36,7 +36,7 @@ class SkillController < AppController
                 skills = user.skills
                 json_response(data: skills)
             else
-                json_response(code: 404, data: { message: "User with ID #{params[:user_id]} not found" })
+                json_response(code: 404, data: { error: "User with ID #{params[:user_id]} not found" })
             end
         rescue => e
             json_response(code: 422, data: { error: e.message })

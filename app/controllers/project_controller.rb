@@ -32,7 +32,7 @@ class ProjectController < AppController
                 projects = user.projects
                 json_response(data: projects)
             else
-                json_response(code: 404, data: { message: "User with ID #{params[:user_id]} not found" })
+                json_response(code: 404, data: { error: "User with ID #{params[:user_id]} not found" })
             end
         rescue => e
             json_response(code: 422, data: { error: e.message })
