@@ -8,17 +8,6 @@ class UserController < AppController
         end
     end
 
-     # @before_filter: Verify authorization before certain routes
-
-  # before do
-  #   pass if ['/user/:id', '/auth/login'].exclude?(request.path_info)
-  #   begin
-  #     verify_auth # Verify authorization header and extract uid
-  #   rescue StandardError => e
-  #     error_response(401, 'Unauthorized') # Return a 401 Unauthorized response
-  #   end
-  # end
-
    #@method: create a new user
    post '/auth/signup' do
     begin
@@ -26,6 +15,7 @@ class UserController < AppController
       unless user.save
         puts " errors: #{user.errors.full_messages}"
       end
+      save_user(user.id)
       json_response(code: 201, data: user)
     rescue => e
       error_response(422, e)
@@ -57,7 +47,7 @@ end
       user_data = User.find_by(email: @user['email'])
       if user_data.password == @user['password']
         token = encode(user_data.id,user_data.email)
-        save_user(token)
+        save_user(user_data.id)
         json_response(code: 200, data: {
           id: user_data.id,
           email: user_data.email,

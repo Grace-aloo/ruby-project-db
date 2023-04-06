@@ -90,19 +90,19 @@ class AppController < Sinatra::Base
         error_response(401, 'Your request is not authorized')
       else
         token = auth_headers.split(' ')[1]
-        begin
-          @uid = decode(token)[0]['data']['uid'].to_i
-        rescue JWT::DecodeError => e
-          error_response(401, e)
-        end
+        save_user_id(token)
       end
     end
     
       #get and save user_id
-      def save_user(token)
+      def save_user_id(token)
         @uid = decode(token)[0]["data"]["uid"].to_i
-        puts "uid: #{@uid}"
     end
+
+    def save_user(id)
+      session[:uid] = id
+      session[:expiry] = 6.hours.from_now
+  end
 
     #delete jwt token 
     def remove_user 
