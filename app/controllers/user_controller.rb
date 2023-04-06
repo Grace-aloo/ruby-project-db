@@ -10,14 +10,14 @@ class UserController < AppController
 
      # @before_filter: Verify authorization before certain routes
 
-  before do
-    pass if ['/user/:id', '/auth/login'].exclude?(request.path_info)
-    begin
-      verify_auth # Verify authorization header and extract uid
-    rescue StandardError => e
-      error_response(401, 'Unauthorized') # Return a 401 Unauthorized response
-    end
-  end
+  # before do
+  #   pass if ['/user/:id', '/auth/login'].exclude?(request.path_info)
+  #   begin
+  #     verify_auth # Verify authorization header and extract uid
+  #   rescue StandardError => e
+  #     error_response(401, 'Unauthorized') # Return a 401 Unauthorized response
+  #   end
+  # end
 
    #@method: create a new user
    post '/auth/signup' do
@@ -61,7 +61,8 @@ end
         token = encode(user_data.id,user_data.email)
         json_response(code: 200, data: {
           id: user_data.id,
-          email: user_data.email
+          email: user_data.email,
+          token:token
         })
       else
         json_response(code: 422, data: { message: "Your email/password combination is not correct" })
