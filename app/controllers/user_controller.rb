@@ -26,7 +26,6 @@ class UserController < AppController
       unless user.save
         puts " errors: #{user.errors.full_messages}"
       end
-      save_user(user.id)
       json_response(code: 201, data: user)
     rescue => e
       error_response(422, e)
@@ -57,8 +56,8 @@ end
     begin
       user_data = User.find_by(email: @user['email'])
       if user_data.password == @user['password']
-        save_user(user_data.id)
         token = encode(user_data.id,user_data.email)
+        save_user(token)
         json_response(code: 200, data: {
           id: user_data.id,
           email: user_data.email,

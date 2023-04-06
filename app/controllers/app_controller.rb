@@ -62,7 +62,7 @@ class AppController < Sinatra::Base
             },
             exp: Time.now.to_i + (24 * 3600)
           }
-          JWT.encode(payload, ENV['movies_key'], 'HS256')
+          JWT.encode(payload,ENV['movies_key'], 'HS256')
         rescue JWT::EncodeError => e
           error_response(500, e)
         end
@@ -71,7 +71,7 @@ class AppController < Sinatra::Base
         # Decode JWT token
       def decode(token)
         begin
-          JWT.decode(token, ENV['movies_key'], true, { algorithm: 'HS256' })
+          JWT.decode(token,ENV['movies_key'], true, { algorithm: 'HS256' })
         rescue JWT::DecodeError => e
           error_response(401, e)
         end
@@ -101,6 +101,7 @@ class AppController < Sinatra::Base
       #get and save user_id
       def save_user(token)
         @uid = decode(token)[0]["data"]["uid"].to_i
+        puts "uid: #{@uid}"
     end
 
     #delete jwt token 
