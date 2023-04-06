@@ -5,7 +5,7 @@ class SkillController < AppController
         begin
           verify_auth # Verify authorization header and extract uid
         rescue StandardError => e
-          error_response(401, 'Unauthorized') # Return a 401 Unauthorized response
+          AppController.error_response(401, 'Unauthorized') # Return a 401 Unauthorized response
         end
       end
 
