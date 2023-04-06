@@ -53,6 +53,62 @@ class AppController < Sinatra::Base
         Net::HTTP.get(uri)
       end
 
+      def encode(uid, email)
+        begin
+          payload = {
+            data: {
+              uid: uid,
+              email: email
+            },
+            exp: Time.now.to_i + (24 * 3600)
+          }
+          JWT.encode(payload, ENV['movies_key'], 'HS256')
+        rescue JWT::EncodeError => e
+          error_response(500, e)
+        end
+      end
+  
+        # Decode JWT token
+      def decode(token)
+        begin
+          JWT.decode(token, ENV['movies_key'], true, { algorithm: 'HS256' })
+        rescue JWT::DecodeError => e
+          error_response(401, e)
+        end
+      end
+
+
+    # get logged in user
+    def user
+        User.find(@uid) 
+    end
+
+    # Verify Authorization header and extract uid
+    def verify_auth
+      auth_headers = request.headers['Authorization']
+      if auth_headers.blank?
+        error_response(401, 'Your request is not authorized')
+      else
+        token = auth_headers.split(' ')[1]
+        begin
+          @uid = decode(token)[0]['data']['uid'].to_i
+        rescue JWT::DecodeError => e
+          error_response(401, e)
+        end
+      end
+    end
+    
+      #get and save user_id
+      def save_user(token)
+        @uid = decode(token)[0]["data"]["uid"].to_i
+    end
+
+    #delete jwt token 
+    def remove_user 
+        token = nil
+        json_response(code: 204)
+    end
+
 
     
 end 

@@ -1,7 +1,9 @@
 
 source "https://rubygems.org/"
 
-ruby "2.7.4"
+# ruby "2.7.4"
+
+gem 'jwt'
 
 gem 'sinatra', '~> 3.0', '>= 3.0.5'
 

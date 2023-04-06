@@ -1,25 +1,24 @@
 class SkillController < AppController
 
+    before do
+        pass if ['/skill/create', '/skills', '/skills/user', '/skill/update/:id', '/skill/destroy/:id'].exclude?(request.path_info)
+        begin
+          verify_auth # Verify authorization header and extract uid
+        rescue StandardError => e
+          error_response(401, 'Unauthorized') # Return a 401 Unauthorized response
+        end
+      end
+
      # @method: Add a new Project to the DB
      post '/skill/create' do
         begin
-            skill = Skill.create( self.data(create: true) )
+            skill = user.skills.create( self.data(create: true) )
             json_response(code: 201, data: skill)
         rescue => e
             json_response(code: 422, data: { error: e.message })
         end
     end
-    get '/users/:user_id/skills' do
-        user_id = params[:user_id]
-        if user_id.nil?
-          status 400
-          json_response(error: 'User ID parameter is missing')
-        else
-          user = User.find(user_id)
-          skills = user.skills
-          json_response(data: skills)
-        end
-    end  
+
     #Display all skills
     get '/skills'  do
         skills=Skill.all
@@ -31,18 +30,25 @@ class SkillController < AppController
     end
 
     # @method: Display user specific skills
-    get '/skills/:user_id' do
-        user_id = params[:user_id]
-        skills = Skill.where(user_id: user_id)
-        json_response(data: skills)
+    get '/skills/user' do
+        begin
+            if user
+                skills = user.skills
+                json_response(data: skills)
+            else
+                json_response(code: 404, data: { message: "User with ID #{params[:user_id]} not found" })
+            end
+        rescue => e
+            json_response(code: 422, data: { error: e.message })
+        end
     end
 
      # @method: Update existing Project according to :id
-    put '/skills/update/:id' do
+    put '/skill/update/:id' do
         begin
-            skill = Skill.find(self.skill_id)
+            skill = user.skills.find(self.skill_id)
             skill.update(self.data)
-            json_response(data: { message: "todo updated successfully" })
+            json_response(data: { message: "skill updated successfully" })
         rescue => e
             json_response(code: 422 ,data: { error: e.message })
         end
@@ -51,9 +57,9 @@ class SkillController < AppController
     # @method: Delete project based on :id
     delete '/skill/destroy/:id' do
         begin
-            skill = Skill.find(self.skill_id)
+            skill = user.skills.find(self.skill_id)
             skill.destroy
-            json_response(data: { message: "todo deleted successfully" })
+            json_response(data: { message: "skill deleted successfully" })
         rescue => e
           json_response(code: 422, data: { error: e.message })
         end
